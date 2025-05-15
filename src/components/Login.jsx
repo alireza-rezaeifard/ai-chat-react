@@ -3,9 +3,28 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const [apiKey, setApiKey] = useState('');
-  const [baseUrl, setBaseUrl] = useState('https://ai.liara.ir/api/v1/68258071cba1cb8567601c3d ');
+  const [baseUrl, setBaseUrl] = useState('https://ai.liara.ir/api/v1/68258071cba1cb8567601c3d');
   const [model, setModel] = useState('anthropic/claude-3.7-sonnet');
   const navigate = useNavigate();
+
+  const modelOptions = [
+    'openai/gpt-4o-mini',
+    'google/gemini-2.0-flash-001',
+    'google/gemini-2.5-pro-preview',
+    'google/gemini-2.5-flash-preview',
+    'google/gemini-2.5-flash-preview:thinking',
+    'deepseek/deepseek-chat-v3-0324',
+    'google/gemini-2.0-flash-lite-001',
+    'anthropic/claude-3.7-sonnet',
+    'anthropic/claude-3.7-sonnet:thinking',
+    'anthropic/claude-3.7-sonnet:beta',
+    'deepseek/deepseek-r1-distill-llama-70b',
+    'meta-llama/llama-3.3-70b-instruct',
+    'anthropic/claude-3.5-sonnet',
+    'google/gemini-flash-1.5-8b',
+    'mistralai/mistral-nemo',
+    'google/gemini-flash-1.5'
+  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,17 +52,18 @@ export default function Login() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Model</label>
-          <input 
-            type="text"
+          <select
             value={model}
             onChange={(e) => setModel(e.target.value)}
-            placeholder="e.g., anthropic/claude-3-opus"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
             required
-          />
-          <p className="mt-1 text-sm text-gray-500">
-            Common models: anthropic/claude-3-opus, anthropic/claude-3-sonnet, anthropic/claude-3-haiku
-          </p>
+          >
+            {modelOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div>

@@ -119,7 +119,7 @@ export default function Chat() {
     if (!input.trim() || isLoading) return;
     
     const userMessage = { role: 'user', content: input };
-    setMessages(prev => [...prev, userMessage]);
+    setMessages([userMessage]); // Reset messages to only show current exchange
     setInput('');
     setIsLoading(true);
 
@@ -130,7 +130,6 @@ export default function Chat() {
           model: config.model,
           messages: [
             { role: "system", content: "You are a helpful assistant." },
-            ...messages,
             userMessage
           ]
         },
@@ -143,10 +142,10 @@ export default function Chat() {
       );
 
       const assistantMessage = response.data.choices[0].message;
-      setMessages(prev => [...prev, assistantMessage]);
+      setMessages([userMessage, assistantMessage]); // Show only current exchange
     } catch (error) {
       console.error('API Error:', error);
-      setMessages(prev => [...prev, {
+      setMessages([userMessage, {
         role: 'assistant',
         content: 'Sorry, an error occurred. Please try again.'
       }]);
